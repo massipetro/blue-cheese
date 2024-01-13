@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "73082345971",
+    "project_id": "bluecheese-app",
+    "storage_bucket": "bluecheese-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:73082345971:android:849b69bb0a91c7762b9a86",
+        "android_client_info": {
+          "package_name": "com.bluecheese.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "73082345971-gbnt85qhs2e62gbm7bestkka0pajvfg0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bluecheese.android",
+            "certificate_hash": "ccac650d7167cf94c01833222ea969ab5aff2c18"
+          }
+        },
+        {
+          "client_id": "73082345971-4tpn9mqrv9kjn6gjvdhjo8oo54ck783m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEOTXevhYRwn0MqiEQEWi6m5JUV9INwuM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "73082345971-4tpn9mqrv9kjn6gjvdhjo8oo54ck783m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
