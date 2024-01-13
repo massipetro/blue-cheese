@@ -15,4 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "BlueCheese"
 include(":app")
- 
+include(":mvi")
