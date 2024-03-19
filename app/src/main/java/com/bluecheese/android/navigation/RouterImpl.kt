@@ -1,10 +1,18 @@
 package com.bluecheese.android.navigation
 
 import androidx.navigation.NavHostController
+import dagger.hilt.android.scopes.ActivityRetainedScoped
+import javax.inject.Inject
 
-class RouterImpl(
-    private val navController: NavHostController
-) : Router {
+@ActivityRetainedScoped
+class RouterImpl @Inject constructor() : Router {
+
+    private lateinit var navController: NavHostController
+
+    override fun setNavController(navHostController: NavHostController): Router {
+        navController = navHostController
+        return this
+    }
 
     override fun getNavController(): NavHostController = navController
 
