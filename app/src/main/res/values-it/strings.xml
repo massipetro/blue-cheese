@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="login">accedi</string>
+    <string name="show_password">motra la password</string>
+    <string name="hide_password">nascondi la password</string>
+    <string name="login_google">continua con google</string>
+    <string name="create_account">crea un account</string>
+    <string name="auth_failed">autenticazione fallita</string>
+</resources>

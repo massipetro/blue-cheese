@@ -1,3 +1,11 @@
 <resources>
-    <string name="app_name">BlueCheese</string>
+    <string name="app_name" translatable="false">BlueCheese</string>
+    <string name="email" translatable="false">email</string>
+    <string name="password" translatable="false">password</string>
+    <string name="login">login</string>
+    <string name="show_password">show password</string>
+    <string name="hide_password">hide password</string>
+    <string name="login_google">continue with google</string>
+    <string name="create_account">create an account</string>
+    <string name="auth_failed">authentication failed</string>
 </resources>
