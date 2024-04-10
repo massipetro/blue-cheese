@@ -1,7 +1,7 @@
 package com.bluecheese.android.di
 
-import com.bluecheese.android.presentation.login.LoginReducers
-import com.bluecheese.android.presentation.login.LoginReducersImpl
+import com.bluecheese.android.presentation.signin.SignInReducers
+import com.bluecheese.android.presentation.signin.SignInReducersImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -13,6 +13,6 @@ abstract class ReducerModule {
 
     @Binds
     abstract fun provideLoginReducers(
-        reducers: LoginReducersImpl
-    ): LoginReducers
+        reducers: SignInReducersImpl
+    ): SignInReducers
 }
