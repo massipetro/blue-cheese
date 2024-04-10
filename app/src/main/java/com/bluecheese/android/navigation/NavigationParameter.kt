@@ -12,6 +12,11 @@ sealed class NavigationParameter(
         isAuthenticated = false
     )
 
+    data object SignUp : NavigationParameter(
+        id = "signup",
+        isAuthenticated = false
+    )
+
     data object Home : NavigationParameter(
         id = "home",
         isAuthenticated = true

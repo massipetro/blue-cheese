@@ -4,15 +4,21 @@ import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
-import com.bluecheese.android.presentation.login.LoginScreen
-import com.bluecheese.android.presentation.login.LoginViewModel
+import com.bluecheese.android.presentation.signin.SignInScreen
+import com.bluecheese.android.presentation.signin.SignInViewModel
+import com.bluecheese.android.presentation.signin.signup.SignUpScreen
 
 @Composable
-fun MainNavigation(navigationController: Router, startDestination: NavigationParameter) {
+fun MainNavigation(
+    navigationController: Router,
+    startDestination: NavigationParameter,
+    showSnackbar: (String, SnackbarDuration) -> Unit,
+) {
     val navController = navigationController.getNavController()
     NavHost(
         navController = navController,
@@ -43,11 +49,32 @@ fun MainNavigation(navigationController: Router, startDestination: NavigationPar
             )
         },
     ) {
-        composable<LoginViewModel>(
+        composable<SignInViewModel>(
             route = NavigationParameter.Login,
             navController = navController
         ) { viewModel ->
-            LoginScreen(viewModel)
+            SignInScreen(
+                model = viewModel,
+                showSnackbar
+            )
+        }
+
+        composable<SignInViewModel>(
+            route = NavigationParameter.SignUp,
+            navController = navController
+        ) { viewModel ->
+            SignUpScreen(
+                model = viewModel,
+            )
+        }
+
+        composable<SignInViewModel>(
+            route = NavigationParameter.Home,
+            navController = navController
+        ) {
+            Column {
+                Text(text = "HOME")
+            }
         }
     }
 }
