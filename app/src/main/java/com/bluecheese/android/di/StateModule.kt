@@ -1,7 +1,6 @@
 package com.bluecheese.android.di
 
-import com.bluecheese.android.presentation.common.ApplicationState
-import com.bluecheese.android.presentation.login.LoginState
+import com.bluecheese.android.presentation.signin.SignInState
 import com.bluecheese.mvi.foundation.store
 import dagger.Module
 import dagger.Provides
@@ -12,9 +11,9 @@ import dagger.hilt.android.components.ViewModelComponent
 @InstallIn(ViewModelComponent::class)
 class StateModule {
 
-    @Provides
-    fun provideApplicationState() = store(ApplicationState())
+    // @Provides
+    // fun provideApplicationState() = store(ApplicationState())
 
     @Provides
-    fun provideLoginState() = store(LoginState())
+    fun provideLoginState() = store(SignInState())
 }

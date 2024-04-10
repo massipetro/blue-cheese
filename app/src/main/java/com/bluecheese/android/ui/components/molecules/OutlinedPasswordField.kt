@@ -22,6 +22,7 @@ import com.bluecheese.android.R
 fun OutlinedPasswordField(
     value: String,
     label: String,
+    isError: Boolean,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -42,6 +43,7 @@ fun OutlinedPasswordField(
     OutlinedTextField(
         modifier = modifier,
         value = value,
+        isError = isError,
         label = { Text(text = label) },
         onValueChange = onValueChange,
         singleLine = true,

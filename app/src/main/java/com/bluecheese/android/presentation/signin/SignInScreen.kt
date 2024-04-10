@@ -1,6 +1,10 @@
-package com.bluecheese.android.presentation.login
+package com.bluecheese.android.presentation.signin
 
 
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.IntentSenderRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,11 +17,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DividerDefaults
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -30,7 +36,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.bluecheese.android.R
 import com.bluecheese.android.presentation.common.BlueCheesePreview
-import com.bluecheese.android.presentation.common.LocalSnackbarHostState
 import com.bluecheese.android.ui.components.atoms.Spacer16
 import com.bluecheese.android.ui.components.molecules.OutlinedPasswordField
 import com.bluecheese.android.ui.theme.ButtonSize
@@ -38,42 +43,47 @@ import com.bluecheese.android.ui.theme.PreviewScreen
 import com.bluecheese.mvi.compose.rememberMviComponent
 import com.bluecheese.mvi.foundation.Model
 
-private data class LoginActions(
+private data class SignInActions(
     val onChangeEmail: (String) -> Unit,
     val onChangePassword: (String) -> Unit,
     val onLogin: () -> Unit,
     val onGoogleLogin: () -> Unit,
-    val onSignup: () -> Unit,
+    val onGoogleSignInResult: (ActivityResult) -> Unit,
+    val onCreateAccount: () -> Unit,
+    val showSnackBar: (String, SnackbarDuration) -> Unit,
 ) {
     companion object {
-        val NoActions = LoginActions(
-            {}, {}, {}, {}, {},
+        val NoActions = SignInActions(
+            {}, {}, {}, {}, {}, {}, { _, _ -> }
         )
     }
 }
 
 @Composable
-fun LoginScreen(
-    model: Model<LoginState, LoginIntent>
+fun SignInScreen(
+    model: Model<SignInState, SignInIntent>,
+    showSnackBar: (String, SnackbarDuration) -> Unit,
 ) {
     val (state, onIntent) = rememberMviComponent(model = model)
 
-    LoginScreen(
+    SignInScreen(
         state = state,
-        actions = LoginActions(
-            onChangeEmail = { LoginIntent.ChangeEmail(it).let(onIntent) },
-            onChangePassword = { LoginIntent.ChangePassword(it).let(onIntent) },
-            onLogin = { LoginIntent.Login.let(onIntent) },
-            onGoogleLogin = { LoginIntent.GoogleLogin.let(onIntent) },
-            onSignup = { LoginIntent.Signup.let(onIntent) },
+        actions = SignInActions(
+            onChangeEmail = { SignInIntent.ChangeEmail(it).let(onIntent) },
+            onChangePassword = { SignInIntent.ChangePassword(it).let(onIntent) },
+            onLogin = { SignInIntent.Login.let(onIntent) },
+            onGoogleLogin = { SignInIntent.GoogleLogin.let(onIntent) },
+            onCreateAccount = { SignInIntent.CreateAccount.let(onIntent) },
+            onGoogleSignInResult = { SignInIntent.GoogleSignInResult(it).let(onIntent) },
+            showSnackBar = showSnackBar,
         )
     )
 }
 
 @Composable
-private fun LoginScreen(
-    state: LoginState,
-    actions: LoginActions,
+private fun SignInScreen(
+    state: SignInState,
+    actions: SignInActions,
 ) = Column(
     modifier = Modifier
         .fillMaxSize()
@@ -81,17 +91,28 @@ private fun LoginScreen(
     horizontalAlignment = Alignment.CenterHorizontally,
     verticalArrangement = Arrangement.Center
 ) {
-    val snackbarHostState = LocalSnackbarHostState.current
     val authFailedString = stringResource(id = R.string.auth_failed)
     LaunchedEffect(state.isLoginFailed) {
-        if (state.isLoginFailed) snackbarHostState.showSnackbar(
-            message = authFailedString,
+        if (state.isLoginFailed) actions.showSnackBar(authFailedString, SnackbarDuration.Short)
+    }
+
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartIntentSenderForResult(),
+        onResult = actions.onGoogleSignInResult
+    )
+
+    LaunchedEffect(state.intentSender) {
+        launcher.launch(
+            IntentSenderRequest.Builder(
+                intentSender = state.intentSender ?: return@LaunchedEffect
+            ).build()
         )
     }
 
     OutlinedTextField(
         modifier = Modifier.fillMaxWidth(),
         value = state.email,
+        isError = state.isLoginFailed,
         label = { Text(text = stringResource(id = R.string.email)) },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
         onValueChange = actions.onChangeEmail
@@ -100,6 +121,7 @@ private fun LoginScreen(
     OutlinedPasswordField(
         modifier = Modifier.fillMaxWidth(),
         value = state.password,
+        isError = state.isLoginFailed,
         label = stringResource(id = R.string.password),
         onValueChange = actions.onChangePassword
     )
@@ -110,13 +132,14 @@ private fun LoginScreen(
             .height(ButtonSize.Medium),
         onClick = actions.onLogin
     ) {
-        Text(text = stringResource(id = R.string.login))
+        if (state.isLoginLoading) CircularProgressIndicator()
+        else Text(text = stringResource(id = R.string.login))
     }
     Spacer16()
     Row(verticalAlignment = Alignment.CenterVertically) {
         HalfDivider()
         Spacer16()
-        Text(text = "or", color = MaterialTheme.colorScheme.secondary)
+        Text(text = stringResource(id = R.string.or), color = MaterialTheme.colorScheme.secondary)
         Spacer16()
         HalfDivider()
     }
@@ -139,7 +162,7 @@ private fun LoginScreen(
         modifier = Modifier
             .fillMaxWidth()
             .height(ButtonSize.Medium),
-        onClick = actions.onSignup
+        onClick = actions.onCreateAccount
     ) {
         Text(text = stringResource(id = R.string.create_account))
     }
@@ -155,6 +178,6 @@ private fun RowScope.HalfDivider() = Box(
 
 @PreviewScreen
 @Composable
-private fun LoginScreenPreview() = BlueCheesePreview {
-    LoginScreen(state = LoginState(), actions = LoginActions.NoActions)
+private fun SignInScreenPreview() = BlueCheesePreview {
+    SignInScreen(state = SignInState(), actions = SignInActions.NoActions)
 }
