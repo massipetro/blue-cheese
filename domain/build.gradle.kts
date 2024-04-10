@@ -40,6 +40,7 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
 
     api("com.google.firebase:firebase-auth:22.3.1")
+    api("com.google.android.gms:play-services-auth:21.0.0")
     api("io.arrow-kt:arrow-core:1.2.1")
 
     implementation("com.google.dagger:hilt-android:2.50")
