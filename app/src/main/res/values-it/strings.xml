@@ -6,4 +6,13 @@
     <string name="login_google">continua con google</string>
     <string name="create_account">crea un account</string>
     <string name="auth_failed">autenticazione fallita</string>
+    <string name="or">o</string>
+    <string name="validation_missing_capital_letter">la password deve contenere una lettera maiuscola</string>
+    <string name="validation_missing_digit">la password deve contenere un numero</string>
+    <string name="validation_missing_special_char">la password deve contenere un carattere speciale</string>
+    <string name="confirm_password">conferma la password</string>
+    <string name="back">indietro</string>
+    <string name="missing_capital_letter">aggiungi almeno una lettera maiuscola</string>
+    <string name="missing_digit">aggiungi almeno un numero</string>
+    <string name="missing_special_character">aggiungi almeno un carattere speciale (!, %, &amp;, ?, ecc.)</string>
 </resources>

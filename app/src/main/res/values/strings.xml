@@ -8,4 +8,13 @@
     <string name="login_google">continue with google</string>
     <string name="create_account">create an account</string>
     <string name="auth_failed">authentication failed</string>
+    <string name="or">or</string>
+    <string name="validation_missing_capital_letter">password must contain one capital letter</string>
+    <string name="validation_missing_digit">password must contain one digit</string>
+    <string name="validation_missing_special_char">password must contain one special character</string>
+    <string name="confirm_password">confirm password</string>
+    <string name="back">back</string>
+    <string name="missing_capital_letter">add at least one capital letter</string>
+    <string name="missing_digit">add at least one number</string>
+    <string name="missing_special_character">add at least one special character (!, %, &amp;, ?, etc.)</string>
 </resources>
