@@ -14,4 +14,9 @@ interface UserRepository {
         username: String,
         password: String
     ): Flow<Either<Exception, FirebaseUser?>>
+
+    fun signUp(
+        username: String,
+        password: String
+    ): Flow<Either<Exception, FirebaseUser?>>
 }

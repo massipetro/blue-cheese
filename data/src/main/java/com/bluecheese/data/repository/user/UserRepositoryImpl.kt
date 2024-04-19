@@ -12,23 +12,37 @@ import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
-    private val auth: FirebaseAuth
+    private val auth: FirebaseAuth,
 ) : UserRepository {
     override fun login(
         username: String,
         password: String
-    ): Flow<Either<Exception, FirebaseUser>> {
-        return flow {
-            try {
-                auth
-                    .signInWithEmailAndPassword(username, password)
-                    .await()
-                    .user
-                    ?.right()
-                    ?: IllegalArgumentException().left()
-            } catch (e: Exception) {
-                e.left()
-            }
-        }
+    ): Flow<Either<Exception, FirebaseUser?>> = flow {
+        try {
+            auth
+                .signInWithEmailAndPassword(username, password)
+                .await()
+                .user
+                ?.right()
+                ?: IllegalArgumentException().left()
+        } catch (e: Exception) {
+            e.left()
+        }.let { emit(it) }
+    }
+
+    override fun signUp(
+        username: String,
+        password: String
+    ): Flow<Either<Exception, FirebaseUser?>> = flow {
+        try {
+            auth
+                .createUserWithEmailAndPassword(username, password)
+                .await()
+                .user
+                ?.right()
+                ?: IllegalArgumentException().left()
+        } catch (e: Exception) {
+            e.left()
+        }.let { emit(it) }
     }
 }
