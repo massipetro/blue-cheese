@@ -25,6 +25,7 @@ fun OutlinedPasswordField(
     isError: Boolean,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
+    supportingText: String? = null,
 ) {
     var passwordVisible by remember { mutableStateOf(false) }
 
@@ -45,6 +46,7 @@ fun OutlinedPasswordField(
         value = value,
         isError = isError,
         label = { Text(text = label) },
+        supportingText = supportingText?.let { { Text(text = it) } },
         onValueChange = onValueChange,
         singleLine = true,
         visualTransformation = visualTransformation,
