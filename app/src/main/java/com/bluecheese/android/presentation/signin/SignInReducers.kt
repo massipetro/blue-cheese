@@ -7,7 +7,9 @@ import javax.inject.Inject
 interface SignInReducers {
     fun changeEmail(i: SignInIntent.ChangeEmail): Reducer<SignInState>
     fun changePassword(i: SignInIntent.ChangePassword): Reducer<SignInState>
+    fun changeConfirmPassword(i: SignInIntent.ChangeConfirmPassword): Reducer<SignInState>
     fun updateIntentSender(d: IntentSender): Reducer<SignInState>
+    fun updateSignUpError(d: String?): Reducer<SignInState>
 
     val setLoginFailed: Reducer<SignInState>
     val resetLoginError: Reducer<SignInState>
@@ -24,8 +26,17 @@ class SignInReducersImpl @Inject constructor() : SignInReducers {
         s.copy(password = i.password)
     }
 
+    override fun changeConfirmPassword(i: SignInIntent.ChangeConfirmPassword) =
+        Reducer<SignInState> { s ->
+            s.copy(confirmPassword = i.password)
+        }
+
     override fun updateIntentSender(d: IntentSender) = Reducer<SignInState> { s ->
         s.copy(intentSender = d)
+    }
+
+    override fun updateSignUpError(d: String?) = Reducer<SignInState> { s ->
+        s.copy(signUpError = d)
     }
 
     override val setLoginFailed = Reducer<SignInState> { s ->

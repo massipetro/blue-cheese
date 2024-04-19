@@ -65,6 +65,7 @@ fun MainNavigation(
         ) { viewModel ->
             SignUpScreen(
                 model = viewModel,
+                onBack = viewModel::onBack
             )
         }
 

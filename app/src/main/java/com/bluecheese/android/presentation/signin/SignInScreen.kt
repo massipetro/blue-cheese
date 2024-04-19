@@ -16,8 +16,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Button
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DividerDefaults
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
@@ -36,6 +34,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.bluecheese.android.R
 import com.bluecheese.android.presentation.common.BlueCheesePreview
+import com.bluecheese.android.ui.components.atoms.Button
 import com.bluecheese.android.ui.components.atoms.Spacer16
 import com.bluecheese.android.ui.components.molecules.OutlinedPasswordField
 import com.bluecheese.android.ui.theme.ButtonSize
@@ -127,14 +126,13 @@ private fun SignInScreen(
     )
     Spacer16()
     Button(
+        text = stringResource(id = R.string.login),
+        isLoading = state.isLoginLoading,
         modifier = Modifier
             .fillMaxWidth()
             .height(ButtonSize.Medium),
         onClick = actions.onLogin
-    ) {
-        if (state.isLoginLoading) CircularProgressIndicator()
-        else Text(text = stringResource(id = R.string.login))
-    }
+    )
     Spacer16()
     Row(verticalAlignment = Alignment.CenterVertically) {
         HalfDivider()
