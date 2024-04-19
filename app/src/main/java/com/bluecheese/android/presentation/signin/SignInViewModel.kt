@@ -3,6 +3,7 @@ package com.bluecheese.android.presentation.signin
 import android.app.Activity
 import android.content.Context
 import android.util.Log
+import com.bluecheese.android.R
 import com.bluecheese.android.navigation.NavigationParameter
 import com.bluecheese.android.navigation.RouterImpl
 import com.bluecheese.android.navigation.navigateTo
@@ -98,8 +99,11 @@ class SignInViewModel @Inject constructor(
 
         on<SignInIntent.Signup>() sideEffect {
             val state = currentState
-            // TODO add check if confirmPassword and password are the same
-            SignUpUseCase.Params(state.email, state.confirmPassword)
+            val passwordsNotMatching = context.getString(R.string.passwords_not_matching)
+            if (state.password != state.confirmPassword) updateState(
+                reducers.updateSignUpError(passwordsNotMatching)
+            )
+            else SignUpUseCase.Params(state.email, state.confirmPassword)
                 .let(signUpUseCase::perform)
                 .onStart {
                     updateState(

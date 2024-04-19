@@ -17,4 +17,5 @@
     <string name="missing_capital_letter">add at least one capital letter</string>
     <string name="missing_digit">add at least one number</string>
     <string name="missing_special_character">add at least one special character (!, %, &amp;, ?, etc.)</string>
+    <string name="passwords_not_matching">passwords do not match</string>
 </resources>
