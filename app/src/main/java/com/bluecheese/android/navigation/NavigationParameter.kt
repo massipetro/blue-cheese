@@ -17,8 +17,18 @@ sealed class NavigationParameter(
         isAuthenticated = false
     )
 
+    data object NavigationBar : NavigationParameter(
+        id = "navigation-bar",
+        isAuthenticated = true
+    )
+
     data object Home : NavigationParameter(
         id = "home",
+        isAuthenticated = true
+    )
+
+    data object Profile : NavigationParameter(
+        id = "profile",
         isAuthenticated = true
     )
 }

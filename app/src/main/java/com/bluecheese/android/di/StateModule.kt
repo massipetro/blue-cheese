@@ -1,5 +1,7 @@
 package com.bluecheese.android.di
 
+import com.bluecheese.android.presentation.home.HomeState
+import com.bluecheese.android.presentation.navigation.NavigationBarState
 import com.bluecheese.android.presentation.signin.SignInState
 import com.bluecheese.mvi.foundation.store
 import dagger.Module
@@ -15,5 +17,11 @@ class StateModule {
     // fun provideApplicationState() = store(ApplicationState())
 
     @Provides
-    fun provideLoginState() = store(SignInState())
+    fun provideSignInState() = store(SignInState())
+
+    @Provides
+    fun provideHomeState() = store(HomeState())
+
+    @Provides
+    fun provideNavigationBarState() = store(NavigationBarState())
 }

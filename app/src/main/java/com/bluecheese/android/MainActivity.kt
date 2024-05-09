@@ -35,7 +35,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         auth = Firebase.auth
         val startDestination =
-            if (auth.currentUser == null) NavigationParameter.Login else NavigationParameter.Home
+            if (auth.currentUser == null) NavigationParameter.Login else NavigationParameter.NavigationBar
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {

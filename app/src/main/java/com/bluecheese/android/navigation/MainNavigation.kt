@@ -2,13 +2,13 @@ package com.bluecheese.android.navigation
 
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.SnackbarDuration
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
+import com.bluecheese.android.presentation.navigation.NavigationBarScreen
+import com.bluecheese.android.presentation.navigation.NavigationBarViewModel
 import com.bluecheese.android.presentation.signin.SignInScreen
 import com.bluecheese.android.presentation.signin.SignInViewModel
 import com.bluecheese.android.presentation.signin.signup.SignUpScreen
@@ -69,13 +69,11 @@ fun MainNavigation(
             )
         }
 
-        composable<SignInViewModel>(
-            route = NavigationParameter.Home,
+        composable<NavigationBarViewModel>(
+            route = NavigationParameter.NavigationBar,
             navController = navController
-        ) {
-            Column {
-                Text(text = "HOME")
-            }
+        ) { viewModel ->
+            NavigationBarScreen(model = viewModel)
         }
     }
 }
