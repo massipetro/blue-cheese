@@ -27,6 +27,11 @@ sealed class NavigationParameter(
         isAuthenticated = true
     )
 
+    data object Camera :NavigationParameter(
+        id = "camera",
+        isAuthenticated = true
+    )
+
     data object Profile : NavigationParameter(
         id = "profile",
         isAuthenticated = true

@@ -7,6 +7,8 @@ import androidx.compose.material3.SnackbarDuration
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
+import com.bluecheese.android.presentation.camera.CameraScreen
+import com.bluecheese.android.presentation.camera.CameraViewModel
 import com.bluecheese.android.presentation.navigation.NavigationBarScreen
 import com.bluecheese.android.presentation.navigation.NavigationBarViewModel
 import com.bluecheese.android.presentation.signin.SignInScreen
@@ -74,6 +76,13 @@ fun MainNavigation(
             navController = navController
         ) { viewModel ->
             NavigationBarScreen(model = viewModel)
+        }
+
+        composable<CameraViewModel>(
+            route = NavigationParameter.Camera,
+            navController = navController
+        ) { viewModel ->
+            CameraScreen(viewModel)
         }
     }
 }
