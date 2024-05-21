@@ -1,5 +1,6 @@
 package com.bluecheese.android.di
 
+import com.bluecheese.android.presentation.camera.CameraState
 import com.bluecheese.android.presentation.home.HomeState
 import com.bluecheese.android.presentation.navigation.NavigationBarState
 import com.bluecheese.android.presentation.signin.SignInState
@@ -24,4 +25,7 @@ class StateModule {
 
     @Provides
     fun provideNavigationBarState() = store(NavigationBarState())
+
+    @Provides
+    fun provideCameraState() = store(CameraState())
 }

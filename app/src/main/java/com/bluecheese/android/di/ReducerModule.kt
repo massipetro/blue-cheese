@@ -1,5 +1,7 @@
 package com.bluecheese.android.di
 
+import com.bluecheese.android.presentation.camera.CameraReducers
+import com.bluecheese.android.presentation.camera.CameraReducersImpl
 import com.bluecheese.android.presentation.navigation.NavigationBarReducers
 import com.bluecheese.android.presentation.navigation.NavigationBarReducersImpl
 import com.bluecheese.android.presentation.signin.SignInReducers
@@ -22,4 +24,9 @@ abstract class ReducerModule {
     abstract fun provideNavigationBarReducers(
         reducers: NavigationBarReducersImpl
     ): NavigationBarReducers
+
+    @Binds
+    abstract fun provideCameraReducers(
+        reducers: CameraReducersImpl
+    ): CameraReducers
 }
