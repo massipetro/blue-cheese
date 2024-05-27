@@ -3,6 +3,7 @@ package com.bluecheese.android.presentation.camera
 import com.bluecheese.android.navigation.RouterImpl
 import com.bluecheese.android.navigation.navigateBack
 import com.bluecheese.android.presentation.common.RoutingViewModel
+import com.bluecheese.domain.interactor.SavePhotoToGalleryUseCase
 import com.bluecheese.mvi.foundation.Model
 import com.bluecheese.mvi.foundation.Store
 import com.bluecheese.mvi.viewmodel.stateMachine
@@ -15,6 +16,7 @@ class CameraViewModel @Inject constructor(
     router: RouterImpl,
     private val store: Store<CameraState>,
     private val reducers: CameraReducers,
+    private val savePhotoToGalleryUseCase: SavePhotoToGalleryUseCase
 ) : Model<CameraState, CameraIntent>, RoutingViewModel(router) {
     override fun subscribeTo(intents: Flow<CameraIntent>) = stateMachine(
         store = store,
@@ -29,7 +31,9 @@ class CameraViewModel @Inject constructor(
         }
 
         on<CameraIntent.AcceptPhotoCapture>() sideEffect {
-            navigateBack()
+            currentState.lastCapturedPhoto
+                ?.let { savePhotoToGalleryUseCase.perform(it) }
+                ?.map { navigateBack() }
         }
     }
 }
