@@ -9,6 +9,9 @@ import com.bluecheese.mvi.foundation.Store
 import com.bluecheese.mvi.viewmodel.stateMachine
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
 import javax.inject.Inject
 
 @HiltViewModel
@@ -28,9 +31,12 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    // FIXME crash on changing date and loading images for carousel
     private suspend fun SideEffectScope<HomeState>.loadPhotos(
-        date: Long
+        dateInSeconds: Long
     ) = retrievePhotosFromGalleryUseCase
-        .perform(date)
-        .map { updateState(reducers.updatePhotos(it)) }
+        .perform(dateInSeconds)
+        .map { result -> result.map { updateState(reducers.updatePhotos(it)) } }
+        .onStart { updateState(reducers.updatePhotos(null)) }
+        .collect()
 }

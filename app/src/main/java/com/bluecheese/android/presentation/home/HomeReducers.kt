@@ -7,15 +7,15 @@ import com.bluecheese.mvi.foundation.Reducer
 import javax.inject.Inject
 
 interface HomeReducers {
-    fun updatePhotos(b: List<Bitmap>): Reducer<HomeState>
+    fun updatePhotos(b: List<Bitmap>?): Reducer<HomeState>
 }
 
 class HomeReducersImpl @Inject constructor() : HomeReducers {
     override fun updatePhotos(
-        b: List<Bitmap>
+        b: List<Bitmap>?
     ) = Reducer<HomeState> { s ->
         s.copy(
-            photos = b.map {
+            photos = b?.map {
                 Carousel.Item(
                     id = it.hashCode().toString(),
                     bitmap = it.asImageBitmap()
