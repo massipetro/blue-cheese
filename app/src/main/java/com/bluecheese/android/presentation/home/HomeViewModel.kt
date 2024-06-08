@@ -31,7 +31,6 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    // FIXME crash on changing date and loading images for carousel
     private suspend fun SideEffectScope<HomeState>.loadPhotos(
         dateInSeconds: Long
     ) = retrievePhotosFromGalleryUseCase

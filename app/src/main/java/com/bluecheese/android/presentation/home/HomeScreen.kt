@@ -61,6 +61,8 @@ private fun InternalContent(
     actions: HomeScreen.Actions,
 ) {
     val datePickerState = rememberDatePickerState()
+    val photos = state.photos
+
     LaunchedEffect(datePickerState.selectedDateMillis) {
         datePickerState.selectedDateMillis?.let { actions.onSelectDay(it) }
     }
@@ -78,9 +80,9 @@ private fun InternalContent(
             showModeToggle = false
         )
         Spacer8()
-        state.photos?.let {
+        if (photos != null) {
             Carousel(
-                items = it,
+                items = photos,
                 modifier = Modifier.padding(horizontal = HomeScreen.ScreenHorizontalMargin)
             )
         }
