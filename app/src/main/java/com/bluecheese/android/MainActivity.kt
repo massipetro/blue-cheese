@@ -3,6 +3,7 @@ package com.bluecheese.android
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.material3.Scaffold
@@ -37,6 +38,8 @@ class MainActivity : ComponentActivity() {
         val startDestination =
             if (auth.currentUser == null) NavigationParameter.Login else NavigationParameter.NavigationBar
         WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        enableEdgeToEdge()
 
         setContent {
             val applicationState: ApplicationState = rememberApplicationState()
