@@ -12,7 +12,7 @@ interface EventReceiver<E : Event> {
     val eventFlow: Flow<E>
 }
 
-interface EventSender<E: Event> {
+fun interface EventSender<E: Event> {
     fun emit(event: E)
 }
 

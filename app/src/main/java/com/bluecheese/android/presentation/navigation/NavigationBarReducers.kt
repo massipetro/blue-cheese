@@ -1,7 +1,6 @@
 package com.bluecheese.android.presentation.navigation
 
 import com.bluecheese.mvi.foundation.Reducer
-import com.google.android.play.integrity.internal.s
 import javax.inject.Inject
 
 interface NavigationBarReducers {
