@@ -97,6 +97,12 @@ dependencies {
     // Accompanist
     implementation(libs.accompanist.permissions)
 
+    // Coil
+    implementation(libs.coil.compose)
+
+    // Blur
+    implementation(libs.haze)
+
     // Test
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

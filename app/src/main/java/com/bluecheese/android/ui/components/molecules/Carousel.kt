@@ -1,6 +1,8 @@
 package com.bluecheese.android.ui.components.molecules
 
+import android.net.Uri
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -24,7 +26,7 @@ import com.bluecheese.android.ui.theme.PreviewScreen
 
 object Carousel {
     data class Item(
-        val id: String,
+        val uri: Uri,
         val bitmap: ImageBitmap,
     )
 }
@@ -33,6 +35,7 @@ object Carousel {
 @Composable
 fun Carousel(
     items: List<Carousel.Item>,
+    onItemClick: (Carousel.Item) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val state = rememberCarouselState(
@@ -45,7 +48,10 @@ fun Carousel(
         modifier = modifier.fillMaxWidth()
     ) { index ->
         val item = items[index]
-        Card(modifier = Modifier.height(205.dp)) {
+        Card(modifier = Modifier
+            .height(205.dp)
+            .clickable { onItemClick(item) }
+        ) {
             Image(
                 bitmap = item.bitmap,
                 contentDescription = null,
@@ -63,7 +69,7 @@ private fun CarouselPreview(
     state: List<Carousel.Item>
 ) = BlueCheesePreview {
     Column(Modifier.padding(20.dp)) {
-        Carousel(items = state)
+        Carousel(items = state, {})
     }
 }
 
@@ -71,19 +77,19 @@ class CarouselItemPreviewProvider : PreviewParameterProvider<List<Carousel.Item>
     override val values: Sequence<List<Carousel.Item>> = sequenceOf(
         listOf(
             Carousel.Item(
-                "1",
+                Uri.EMPTY,
                 createBitmap(200, 300).asImageBitmap()
             ),
             Carousel.Item(
-                "2",
+                Uri.EMPTY,
                 createBitmap(200, 400).asImageBitmap()
             ),
             Carousel.Item(
-                "3",
+                Uri.EMPTY,
                 createBitmap(500, 400).asImageBitmap()
             ),
             Carousel.Item(
-                "4",
+                Uri.EMPTY,
                 createBitmap(500, 400).asImageBitmap()
             )
         )

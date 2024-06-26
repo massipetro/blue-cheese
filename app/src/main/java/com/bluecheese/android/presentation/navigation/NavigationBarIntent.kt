@@ -5,4 +5,6 @@ import com.bluecheese.mvi.foundation.Intent
 sealed interface NavigationBarIntent : Intent {
     data class ChangeTab(val tab: NavigationBarState.Tab) : NavigationBarIntent
     data object OpenCamera : NavigationBarIntent
+    data object Hide: NavigationBarIntent
+    data object Show: NavigationBarIntent
 }

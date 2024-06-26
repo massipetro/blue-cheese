@@ -4,6 +4,7 @@ import com.bluecheese.android.navigation.NavigationParameter
 import com.bluecheese.android.navigation.RouterImpl
 import com.bluecheese.android.navigation.navigateTo
 import com.bluecheese.android.presentation.common.RoutingViewModel
+import com.bluecheese.mvi.dsl.updateState
 import com.bluecheese.mvi.foundation.Model
 import com.bluecheese.mvi.foundation.Store
 import com.bluecheese.mvi.viewmodel.stateMachine
@@ -26,5 +27,9 @@ class NavigationBarViewModel @Inject constructor(
         on<NavigationBarIntent.OpenCamera>() sideEffect {
             navigateTo(NavigationParameter.Camera)
         }
+
+        on<NavigationBarIntent.Hide>() updateState reducers.hideNavigationBar
+
+        on<NavigationBarIntent.Show>() updateState reducers.showNavigationBar
     }
 }

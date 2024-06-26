@@ -5,7 +5,8 @@ import com.bluecheese.android.R
 import com.bluecheese.mvi.foundation.State
 
 data class NavigationBarState(
-    val currentTab: Tab = Tab.Home
+    val currentTab: Tab = Tab.Home,
+    val isNavigationBarVisible: Boolean = true,
 ) : State {
     enum class Tab(@DrawableRes val icon: Int) {
         Home(R.drawable.ic_home),

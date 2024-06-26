@@ -29,8 +29,8 @@ private const val TAG = "retrieve-photo"
 class RetrievePhotosFromGalleryUseCase @Inject constructor(
     @ApplicationContext private val context: Context
 ) {
-    fun perform(dateInSeconds: Long): Flow<Either<Exception, List<Bitmap>>> {
-        val images = mutableListOf<Bitmap>()
+    fun perform(dateInSeconds: Long): Flow<Either<Exception, Map<Uri, Bitmap>>> {
+        val result = mutableMapOf<Uri, Bitmap>()
         val isVersionNewerThanQ = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
 
         return flow {
@@ -89,10 +89,10 @@ class RetrievePhotosFromGalleryUseCase @Inject constructor(
                                 /* options = */ null
                             )
 
-                            images += image
+                            result += contentUri to image
                         }
                     }
-                    images.right()
+                    result.right()
                 }.getOrElse { exception: Throwable ->
                     exception.message?.let(::println)
                     Exception().left()
