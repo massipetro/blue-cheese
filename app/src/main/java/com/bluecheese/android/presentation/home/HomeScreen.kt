@@ -45,7 +45,7 @@ object HomeScreen {
         val onSelectDay: (Long) -> Unit,
         val onOpenPhoto: (Carousel.Item) -> Unit,
         val onCloseOverlay: () -> Unit,
-        val onShareSelectedPhoto: () -> Unit,
+        val onShareSelectedPhoto: (Uri) -> Unit,
     ) {
         companion object {
             val NoActions = Actions({}, {}, {}, {})
@@ -76,7 +76,7 @@ fun HomeScreen(
             onSelectDay = { HomeIntent.SelectDate(it).let(onIntent) },
             onOpenPhoto = { HomeIntent.OpenPhoto(it.uri).let(onIntent) },
             onCloseOverlay = { HomeIntent.HidePhoto.let(onIntent) },
-            onShareSelectedPhoto = { },
+            onShareSelectedPhoto = { HomeIntent.SharePhoto(it).let(onIntent) },
         )
     )
 }
@@ -155,7 +155,7 @@ fun SelectedPhotoOverlay(
             Icon(painter = painterResource(R.drawable.ic_arrow_down), "close-overlay")
         }
         SpacerFull()
-        IconButton(onClick = actions.onShareSelectedPhoto) {
+        IconButton(onClick = { actions.onShareSelectedPhoto(selectedPhoto) }) {
             Icon(painter = painterResource(R.drawable.ic_share), "share-photo")
         }
     }

@@ -1,11 +1,14 @@
 package com.bluecheese.android.presentation.home
 
+import android.content.Intent
 import androidx.lifecycle.viewModelScope
 import com.bluecheese.android.navigation.RouterImpl
+import com.bluecheese.android.presentation.common.ApplicationEffect
 import com.bluecheese.android.presentation.common.RoutingViewModel
 import com.bluecheese.domain.interactor.RetrievePhotosFromGalleryUseCase
 import com.bluecheese.mvi.dsl.SideEffectScope
 import com.bluecheese.mvi.foundation.EventReceiver
+import com.bluecheese.mvi.foundation.EventSender
 import com.bluecheese.mvi.foundation.FlowEventEmitter
 import com.bluecheese.mvi.foundation.Model
 import com.bluecheese.mvi.foundation.Store
@@ -23,6 +26,7 @@ class HomeViewModel @Inject constructor(
     private val store: Store<HomeState>,
     private val reducers: HomeReducers,
     private val retrievePhotosFromGalleryUseCase: RetrievePhotosFromGalleryUseCase,
+    private val applicationEmitter: EventSender<ApplicationEffect>,
 ) : Model<HomeState, HomeIntent>, RoutingViewModel(router), EventReceiver<HomeEffect> {
     private val eventEmitter = FlowEventEmitter<HomeEffect>(viewModelScope)
     override val eventFlow: Flow<HomeEffect> = eventEmitter.eventFlow
@@ -43,6 +47,17 @@ class HomeViewModel @Inject constructor(
         on<HomeIntent.HidePhoto>() sideEffect {
             updateState(reducers.updateSelectedPhoto(null))
             eventEmitter.emit(HomeEffect.ShowNavigationBar)
+        }
+
+        on<HomeIntent.SharePhoto>() sideEffect { i ->
+            Intent(Intent.ACTION_SEND)
+                .apply {
+                    setType("image/jpeg")
+                    putExtra(Intent.EXTRA_STREAM, i.photoUri)
+                }
+                .let { Intent.createChooser(it, "share image") }
+                .let { ApplicationEffect.LaunchIntent(it) }
+                .let { applicationEmitter.emit(it) }
         }
     }
 
